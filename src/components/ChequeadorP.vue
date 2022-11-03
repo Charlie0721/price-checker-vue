@@ -35,7 +35,7 @@
             <small>
             
             $  {{
-                new Intl.NumberFormat("de-DE").format(item.precioventa)
+                new Intl.NumberFormat("de-DE").format(priceWithIco=item.precioventa + item.valorico)
               }}</small
             ><br />
             <small>{{ item.barcode }}</small>
@@ -75,6 +75,7 @@ export default {
       totalPrecios: null,
       cantItems: 0,
       buscaItem: false,
+      priceWithIco:0
     };
   },
   methods: {
@@ -91,16 +92,15 @@ export default {
             this.buscarProducto.barcode = "";
           }
           this.productosPrecios = response.data;
-
           for (let index = 0; index < this.productosPrecios.length; index++) {
-            this.totalPrecios += this.productosPrecios[index].precioventa;
+            this.totalPrecios += this.productosPrecios[index].precioventa+this.productosPrecios[index].valorico;
             this.cantItems++;
           }
 
           this.buscarProducto.barcode = "";
           setInterval(() => {
             this.reloadPage();
-          }, 10000);
+          }, 20000);
         })
         .catch((err) => {
           console.log(err);
